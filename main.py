@@ -5,7 +5,9 @@ import requests
 import os
 from fastapi import FastAPI
 from pydantic import BaseModel
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # Constants
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
@@ -18,7 +20,7 @@ def get_linkedin_user_details(linkedin_url):
     encoded_url = urllib.parse.quote(linkedin_url, safe='')
     conn = http.client.HTTPSConnection("fresh-linkedin-profile-data.p.rapidapi.com")
     headers = {
-        'X-RapidAPI-Key': "your_api_key",
+        'X-RapidAPI-Key': RAPIDAPI_KEY,
         'X-RapidAPI-Host': "fresh-linkedin-profile-data.p.rapidapi.com"
     }
     conn.request("GET", f"/get-linkedin-profile?linkedin_url={encoded_url}&include_skills=false", headers=headers)
@@ -30,7 +32,7 @@ def get_linkedin_posts(linkedin_url):
     encoded_url = urllib.parse.quote(linkedin_url, safe='')
     conn = http.client.HTTPSConnection("fresh-linkedin-profile-data.p.rapidapi.com")
     headers = {
-        'X-RapidAPI-Key': "your_api_key",
+        'X-RapidAPI-Key': RAPIDAPI_KEY,
         'X-RapidAPI-Host': "fresh-linkedin-profile-data.p.rapidapi.com"
     }
     conn.request("GET", f"/get-profile-posts?linkedin_url={encoded_url}&type=posts", headers=headers)
@@ -46,8 +48,8 @@ def generate_text(prompt):
         "Content-Type": "application/json"
     }
     data = {
-        "model": "cohere/command-r-plus",
-        "max_tokens": 4000,
+        "model": "openai/gpt-4-turbo",
+        "max_tokens": 6000,
         "temperature": 0,
         "messages": [{"role": "user", "content": prompt}]
     }
@@ -64,7 +66,7 @@ def generate_career(prompt):
     }
     data = {
         "model": "openai/gpt-4-turbo",
-        "max_tokens": 4000,
+        "max_tokens": 6000,
         "temperature": 0,
         "messages": [{"role": "user", "content": prompt}]
     }
@@ -150,12 +152,14 @@ def linkedin_analysis(url):
         return("No posts found or no text available in posts.(Might be due to you rapidapi key monthly quota limit.)")
 
 
+app = FastAPI()
 
 class Query(BaseModel):
     query: str
 
-app = FastAPI()
 
+
+@app.post("/")
 def analyze(query: Query):
     url = query.query
     return linkedin_analysis(url)
