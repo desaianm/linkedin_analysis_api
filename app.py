@@ -5,9 +5,7 @@ import requests
 import os
 from fastapi import FastAPI
 from pydantic import BaseModel
-from dotenv import load_dotenv
 
-load_dotenv()
 
 # Constants
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")

@@ -1,4 +1,3 @@
 requests
 fastapi
 pydantic
-python-dotenv
