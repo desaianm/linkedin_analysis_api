@@ -3,7 +3,7 @@ from requests.exceptions import JSONDecodeError
 
 try:
     response = requests.post(
-        "http://0.0.0.0:10001",
+        "https://linkedin-analysis-api.onrender.com",
         json={
             "query": "https://www.linkedin.com/in/artificially-intelligent/"
         }
