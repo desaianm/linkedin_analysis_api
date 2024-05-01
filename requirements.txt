@@ -1,0 +1,7 @@
+http
+urllib
+json
+requests
+fastapi
+pydantic
+dotenv
