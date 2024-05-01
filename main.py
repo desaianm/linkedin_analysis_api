@@ -43,26 +43,7 @@ def get_linkedin_posts(linkedin_url):
 def generate_text(prompt):
     headers = {
         "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-        "Referer": YOUR_SITE_URL,
-        "X-Title": YOUR_APP_NAME,
-        "Content-Type": "application/json"
-    }
-    data = {
-        "model": "openai/gpt-4-turbo",
-        "max_tokens": 6000,
-        "temperature": 0,
-        "messages": [{"role": "user", "content": prompt}]
-    }
-    response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
-    return response.json()
-
-def generate_career(prompt):
-    headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
         "x-api-key": f"{OPEN_AI_KEY}",
-        "Referer": YOUR_SITE_URL,
-        "X-Title": YOUR_APP_NAME,
-        "Content-Type": "application/json"
     }
     data = {
         "model": "openai/gpt-4-turbo",
@@ -72,7 +53,6 @@ def generate_career(prompt):
     }
     response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
     return response.json()
-
 
 
 
