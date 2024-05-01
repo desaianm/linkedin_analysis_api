@@ -1,7 +1,4 @@
-http
-urllib
-json
 requests
 fastapi
 pydantic
-dotenv
+python-dotenv
